@@ -1,0 +1,63 @@
+{
+  "webmaster": "https://plugins.jetbrains.com/docs/intellij/getting-help.html",
+  "productWebUrl": "https://plugins.jetbrains.com/docs/intellij/",
+  "searchAlgoliaApiKey": "8c2683cac2d71d547b55183297abb506",
+  "searchAlgoliaId": "OHIV241QET",
+  "searchAlgoliaIndexName": "prod_JETBRAINSCOM_HELP",
+  "productId": "intellij",
+  "footer": {
+    "poweredBy": true,
+    "socials": {
+      "blog": {
+        "title": "",
+        "url": "https://blog.jetbrains.com/platform/"
+      },
+      "youtube": {
+        "title": "",
+        "url": "https://www.youtube.com/playlist?list=PLQ176FUIyIUZRWGCFY7G9V5zaM00THymY"
+      },
+      "twitter": {
+        "title": "",
+        "url": "https://twitter.com/JBPlatform/"
+      }
+    },
+    "links": [
+      {
+        "title": "JetBrains Platform Slack",
+        "url": "https://plugins.jetbrains.com/slack/"
+      },
+      {
+        "title": "IntelliJ Platform Explorer",
+        "url": "https://jb.gg/ipe"
+      },
+      {
+        "title": "Plugin Ideas",
+        "url": "https://plugins.jetbrains.com/plugin-ideas/"
+      }
+    ]
+  },
+  "keymaps": {
+    "secondary": {
+      "values": []
+    },
+    "primary": {
+      "values": []
+    }
+  },
+  "feedbackSupport": "https://www.jetbrains.com/support/",
+  "feedbackWidget": true,
+  "downloadPage": "https://jb.gg/ipe",
+  "productName": "IntelliJ Platform Plugin SDK",
+  "feedbackUrl": "https://forms-service.jetbrains.com/feedback",
+  "feedbackRequireEmail": false,
+  "useSideblocks": true,
+  "productVersion": "",
+  "searchProductVersion": "",
+  "stage": "release",
+  "searchService": "https://data.services.jetbrains.com/search/",
+  "downloadTitle": "IntelliJ Platform Explorer",
+  "searchServiceUrl": "https://data.services.jetbrains.com/search/",
+  "searchProductId": "intellij",
+  "showDownloadButton": true,
+  "searchMaxHits": 75
+}
