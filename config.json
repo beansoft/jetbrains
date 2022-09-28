@@ -23,12 +23,12 @@
     },
     "links": [
       {
-        "title": "JetBrains Platform Slack",
-        "url": "https://plugins.jetbrains.com/slack/"
+        "title": "IDEA插件社区(B站)",
+        "url": "https://space.bilibili.com/297314170/"
       },
       {
-        "title": "IntelliJ Platform Explorer",
-        "url": "https://jb.gg/ipe"
+        "title": "JetBrains Platform Slack",
+        "url": "https://plugins.jetbrains.com/slack/"
       },
       {
         "title": "Plugin Ideas",
@@ -45,7 +45,7 @@
     }
   },
   "feedbackSupport": "https://www.jetbrains.com/support/",
-  "feedbackWidget": true,
+  "feedbackWidget": false,
   "downloadPage": "https://jb.gg/ipe",
   "productName": "IntelliJ Platform Plugin SDK",
   "feedbackUrl": "https://forms-service.jetbrains.com/feedback",

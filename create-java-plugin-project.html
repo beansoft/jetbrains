@@ -1,0 +1,176 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat"><html lang="en-US" data-colors-preset="contrast" data-primary-color="#307FFF"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8">  <meta name="built-on" content="2022-09-28T11:33:50.0931099"><meta name="build-number" content="${buildNumber}">    <meta name="keywords" content="">  <title>创建Java插件项目 | IntelliJ Platform Plugin SDK</title><script id="virtual-toc-data" type="application/json">[{"id":"ui","level":0,"title":"基本UI概念","anchor":"#ui"},{"id":"19df182_429","level":0,"title":"创建插件","anchor":"#19df182_429"},{"id":"pluginxml","level":0,"title":"plugin.xml 内容简介","anchor":"#pluginxml"},{"id":"buildgradlekts","level":0,"title":"build.gradle.kts 内容简介","anchor":"#buildgradlekts"},{"id":"action","level":0,"title":"新增操作(Action)","anchor":"#action"},{"id":"19df182_476","level":0,"title":"插件调试","anchor":"#19df182_476"},{"id":"19df182_479","level":0,"title":"打包插件","anchor":"#19df182_479"},{"id":"19df182_483","level":0,"title":"测试插件","anchor":"#19df182_483"},{"id":"19df182_485","level":0,"title":"验证插件","anchor":"#19df182_485"},{"id":"19df182_492","level":0,"title":"发布插件","anchor":"#19df182_492"},{"id":"19df182_496","level":0,"title":"接受邮件并等待审核通过","anchor":"#19df182_496"},{"id":"19df182_497","level":0,"title":"技巧","anchor":"#19df182_497"},{"id":"19df182_501","level":0,"title":"常见问题","anchor":"#19df182_501"},{"id":"id","level":0,"title":"已捆绑的内置插件ID","anchor":"#id"},{"id":"19df182_574","level":0,"title":"所有扩展点和监听器列表","anchor":"#19df182_574"}]</script>   <link href="https://resources.jetbrains.com/storage/help-app/v5/app.css" rel="stylesheet">   <link rel="apple-touch-icon" sizes="180x180" href="https://jetbrains.com/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="https://jetbrains.com/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="https://jetbrains.com/favicon-16x16.png"><link rel="manifest" href="https://jetbrains.com/site.webmanifest"><link rel="mask-icon" href="https://jetbrains.com/safari-pinned-tab.svg" color="#000000"><meta name="msapplication-TileColor" content="#000000"/><meta name="msapplication-TileImage" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-144x144.png"/><meta name="msapplication-square70x70logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-70x70.png"/><meta name="msapplication-square150x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-150x150.png"/><meta name="msapplication-wide310x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x150.png"/><meta name="msapplication-square310x310logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x310.png"/>  <meta name="image" content="https://resources.jetbrains.com/storage/products/jetbrains/img/meta/preview.png"><!-- Open Graph --><meta property="og:title" content="创建Java插件项目 | IntelliJ Platform Plugin SDK"/><meta property="og:description" content=""/><meta property="og:image" content="https://resources.jetbrains.com/storage/products/jetbrains/img/meta/preview.png"/><meta property="og:site_name" content="IntelliJ Platform Plugin SDK Help"/><meta property="og:type" content="website"/><meta property="og:locale" content="en_US"/><meta property="og:url" content="https://plugins.jetbrains.com/docs/intellij/create-java-plugin-project.html"/><!-- End Open Graph --><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@JBPlatform"><meta name="twitter:title" content="创建Java插件项目 | IntelliJ Platform Plugin SDK"><meta name="twitter:description" content=""><meta name="twitter:creator" content="@JBPlatform"><meta name="twitter:image:src" content="https://resources.jetbrains.com/storage/products/jetbrains/img/meta/preview.png"><!-- End Twitter Card --><!-- Schema.org WebPage --><script type="application/ld+json"> { "@context": "http://schema.org", "@type": "WebPage", "@id": "https://plugins.jetbrains.com/docs/intellij/create-java-plugin-project.html#webpage", "url": "https://plugins.jetbrains.com/docs/intellij/create-java-plugin-project.html", "name": "创建Java插件项目 | IntelliJ Platform Plugin SDK", "description": "", "image": "https://resources.jetbrains.com/storage/products/jetbrains/img/meta/preview.png", "inLanguage":"en-US" }</script><!-- End Schema.org --><!-- Schema.org WebSite --><script type="application/ld+json"> { "@type": "WebSite", "@id": "https://plugins.jetbrains.com/docs/intellij/#website", "url": "https://plugins.jetbrains.com/docs/intellij/", "name": "IntelliJ Platform Plugin SDK Help" }</script><!-- End Schema.org --></head>    <body data-id="create_java_plugin_project.md" data-main-title="创建Java插件项目" data-article-props="{&quot;seeAlsoStyle&quot;:&quot;links&quot;}"  data-template="article"  data-breadcrumbs="home.topic|JetBrains 码上道：从零开始，开发插件"  data-edit-url="https://github.com/JetBrains/intellij-sdk-docs/edit/main/topics/jbcn_talk/create_java_plugin_project.md"  >  <div class="wrapper"><main class="panel _main"><header class="panel__header"><div class="container"><h3>IntelliJ Platform Plugin SDK  Help</h3><div class="shortcuts-switcher"><label for="switch-shortcuts">Keymap:</label><select class="select _shortcuts" height="1" id="switch-shortcuts">      </select></div><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="create_java_plugin_project.md" id="create_java_plugin_project.md"  >创建Java插件项目</h1><p id="19df182_425" ></p><section class="chapter"  ><h2 id="ui" data-toc="ui"  >基本UI概念</h2><p id="19df182_427" >IDEA 平台的几乎所有部分都是抽象出来的扩展点, 插件开发者不能覆盖底层代码. <figure  id="19df182_428"><a class="lightbox" href="images/IDEA_UI_anno_cn.png"><img alt="Idea ui anno cn" title="Idea ui anno cn" src="images/IDEA_UI_anno_cn.png"  class="article__bordered-element--rounded " width="1829" height="1262"/></a></figure></p></section><section class="chapter"  ><h2 id="19df182_429" data-toc="19df182_429"  >创建插件</h2><p id="19df182_430" >选择菜单 <span class="filepath" id="19df182_431" >文件 | 新建 | 项目... </span>, 选择 <span class="control" id="19df182_432" >IDE 插件</span>, 然后点击右侧 <span class="control" id="19df182_433" >插件</span> 即可完成创建项目.</p><figure  id="19df182_434"><a class="lightbox" href="images/new_java_prj_cn.png"><img alt="New java prj cn" title="New java prj cn" src="images/new_java_prj_cn.png"  class="article__bordered-element--rounded " width="1200" height="928"/></a></figure><aside data-type="note" class="prompt" data-title="" id="19df182_435" ><p id="19df182_436" >如果首次创建, JDK列表可能为空, 当前默认针对2022.1必须添加 JDK 11</p></aside><aside data-type="warning" class="prompt" data-title="" id="19df182_437"><p>由于首次加载项目需要下载依赖库和IDEA相关的发行包, 需要有稳定的网络连接, 否则项目无法运行</p></aside><section class="chapter"  ><h3 id="gradle-intellij-platform" data-toc="gradle-intellij-platform"  >向导创建的 Gradle IntelliJ Platform 插件结构</h3><div class="code-block" data-lang="plaintext"         >
+my_plugin
+├── .run
+│   └── Run IDE with Plugin.run.xml
+├── gradle
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── src
+│   ├── main
+│   │   ├── java
+│   │   └── resources
+│   │       └── META-INF
+│   │           └── plugin.xml
+│   └── test
+│       ├── java
+│       └── resources
+├── .gitignore
+├── build.gradle.kts
+├── gradlew
+├── gradlew.bat
+└── settings.gradle.kts
+</div><ul class="list _ul" id="19df182_439"    ><li class="list__item" id="19df182_440" ><p>默认的 IntelliJ Platform <span class="filepath" id="19df182_441" >build.gradle.kts</span> 文件 (参考下节).</p></li><li class="list__item" id="19df182_442" ><p><span class="filepath" id="19df182_443" >settings.gradle.kts</span> 设置文件, 包含定义 <code class="code " id="19df182_444"  >rootProject.name</code>.</p></li><li class="list__item" id="19df182_445" ><p>Gradle Wrapper 文件, 尤其是 <span class="filepath" id="19df182_446" >gradle-wrapper.properties</span> 文件, 指定了构建插件的 Gradle 版本. 首次运行的时候, IntelliJ IDEA Gradle 插件会下载此文件中指定版本的Gradle.</p></li><li class="list__item" id="19df182_447" ><p><span class="filepath" id="19df182_448" >META-INF</span> 文件夹位于默认的 <code class="code " id="19df182_449"  >main</code> <a href="https://docs.gradle.org/current/userguide/java_plugin.html#sec:java_project_layout" id="19df182_450"   data-external="true" rel="noopener noreferrer" >源代码集</a>包含了插件 <a href="plugin-configuration-file.html" id="19df182_451" data-tooltip="Plugin configuration file contains all the information about the plugin, as well as all registered extensions, actions, listeners, etc."  >配置文件</a>.</p></li><li class="list__item" id="19df182_452" ><p><span class="emphasis" id="19df182_453" >Run Plugin</span> <a href="https://www.jetbrains.com/help/idea/run-debug-configuration.html" id="19df182_454"   data-external="true" rel="noopener noreferrer" >运行配置</a>.</p></li></ul></section></section><section class="chapter"  ><h2 id="pluginxml" data-toc="pluginxml"  >plugin.xml 内容简介</h2><div class="code-block" data-lang="markup"         >
+&lt;!-- 插件配置文件. 读取 https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html --&gt;
+&lt;idea-plugin&gt;
+    &lt;!-- 插件唯一ID, 发不同版本时不能修改. 建议用com.xxx.xxx格式 --&gt;
+    &lt;id&gt;com.example.demo1plugin&lt;/id&gt;
+  &lt;!-- 版本号: 主版本号.次版本号.修订号 https://semver.org/lang/zh-CN/ --&gt;
+    &lt;version&gt;1.0.0&lt;/version&gt;
+    &lt;!-- 插件名字必须用英文且不能有标点, 可有空格和数字如 My Notes, 不能包含 plugin 字样.
+         详细解释: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name --&gt;
+    &lt;name&gt;Demo1plugin&lt;/name&gt;
+
+    &lt;!-- 插件页显示的开发者名称, 邮件和网址(可用GitHub). --&gt;
+    &lt;vendor email=&quot;support@yourcompany.com&quot; url=&quot;https://www.yourcompany.com&quot;&gt;YourCompany&lt;/vendor&gt;
+
+    &lt;!-- 兼容的IDEA版本范围, 发版前请务必测试 --&gt;
+    &lt;idea-version since-build=&quot;213&quot; until-build=&quot;223.*&quot;/&gt;
+
+    &lt;!-- 插件网页和开发工具中的插件描述内容, 只能用简单HTML标记(文本格式, 段落和列表), 不支持CSS和JS, 不支持iframe.
+         必须要有简短的英文描述, 之后可以放中文, 否则会审核不通过.
+         完整内容: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description --&gt;
+    &lt;description&gt;&lt;![CDATA[
+    Enter short description for your theme here.&lt;br&gt;
+    &lt;em&gt;most HTML tags may be used&lt;/em&gt;
+  ]]&gt;&lt;/description&gt;
+
+    &lt;!-- 更改备注, 建议每个版本更新, 支持中英文 --&gt;
+    &lt;change-notes&gt;&lt;![CDATA[
+    Initial release of the theme.
+  ]]&gt;&lt;/change-notes&gt;
+
+    &lt;!-- 产品和插件依赖兼容(这部分比较复杂).
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html --&gt;
+    &lt;depends&gt;com.intellij.modules.platform&lt;/depends&gt;
+
+  &lt;!-- 扩展列表 --&gt;
+    &lt;extensions defaultExtensionNs=&quot;com.intellij&quot;&gt;
+    &lt;/extensions&gt;
+&lt;/idea-plugin&gt;
+</div></section><section class="chapter"  ><h2 id="buildgradlekts" data-toc="buildgradlekts"  >build.gradle.kts 内容简介</h2><aside data-type="note" class="prompt" data-title="" id="19df182_456" ><p id="19df182_457" >当前的 Gradle IntelliJ Plugin 版本是 <img alt="GitHub Release" title="GitHub Release" id="19df182_458" src="https://img.shields.io/github/release/jetbrains/gradle-intellij-plugin.svg?style=flat-square"  class="inline-icon-"   /> 请在创建项目后尽量升级到最新版本.</p></aside><div class="code-block" data-lang="kotlin"         >
+// Gradle 插件列表
+plugins {
+  id(&quot;java&quot;) // Java 插件
+  id(&quot;org.jetbrains.intellij&quot;) version &quot;1.7.0&quot;
+}
+
+group = &quot;com.example&quot;
+version = &quot;1.0-SNAPSHOT&quot;
+
+repositories {
+  mavenCentral() // Maven 仓库地址
+}
+
+// 配置 Gradle IntelliJ Plugin
+// 阅读更多: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
+intellij {
+  version.set(&quot;2021.3&quot;) // 编译的 IDEA 版本, 建议修改为 2021.3.3或2022.2.2
+  type.set(&quot;IC&quot;) // 支持的目标 IDE 平台
+
+  plugins.set(listOf(/* Plugin Dependencies */))// 依赖的插件列表
+}
+
+tasks {
+  // JVM 兼容性版本, 为 Java 11
+  withType&lt;JavaCompile&gt; {
+    sourceCompatibility = &quot;11&quot;
+    targetCompatibility = &quot;11&quot;
+  }
+
+  // 修改插件兼容的IDE版本范围为2021.3到2022.3
+  patchPluginXml {
+    sinceBuild.set(&quot;213&quot;)
+    untilBuild.set(&quot;223.*&quot;)
+  }
+
+  // 插件签名(可忽略)
+  signPlugin {
+    certificateChain.set(System.getenv(&quot;CERTIFICATE_CHAIN&quot;))
+    privateKey.set(System.getenv(&quot;PRIVATE_KEY&quot;))
+    password.set(System.getenv(&quot;PRIVATE_KEY_PASSWORD&quot;))
+  }
+
+  // 自动发布插件任务(可忽略)
+  publishPlugin {
+    token.set(System.getenv(&quot;PUBLISH_TOKEN&quot;))
+  }
+}
+</div><p id="19df182_460" >需要修改的地方:</p><div class="code-block" data-lang="kotlin"         >
+id(&quot;org.jetbrains.intellij&quot;) version &quot;1.7.0&quot;
+</div><p id="19df182_462" >==&gt; 升级到最新版 Gradle Intellij 插件</p><div class="code-block" data-lang="kotlin"         >
+id(&quot;org.jetbrains.intellij&quot;) version &quot;1.9.0&quot;
+</div><div class="code-block" data-lang="kotlin"         >
+tasks {
+  // Set the JVM compatibility versions
+  withType&lt;JavaCompile&gt; {
+    sourceCompatibility = &quot;11&quot;
+    targetCompatibility = &quot;11&quot;
+  }
+}
+</div><p id="19df182_465" >需要增加文件编码(否则Win10上会汉字出现乱码) ==&gt;</p><div class="code-block" data-lang="kotlin"         >
+tasks {
+  // Set the JVM compatibility versions
+  withType&lt;JavaCompile&gt; {
+    sourceCompatibility = &quot;11&quot;
+    targetCompatibility = &quot;11&quot;
+    options.encoding = &quot;UTF-8&quot;
+  }
+}
+</div><aside data-type="note" class="prompt" data-title="" id="19df182_467" ><p id="19df182_468" >建议: 当您熟悉基本操作后, 可以考虑 <a href="https://github.com/JetBrains/intellij-platform-plugin-template" id="19df182_469"   data-external="true" rel="noopener noreferrer" >功能齐全的GitHub IntelliJ Platform Plugin 模板</a> 作为插件项目的起步, 提供了一些命令行操作和GitHub Actions.</p></aside></section><section class="chapter"  ><h2 id="action" data-toc="action"  >新增操作(Action)</h2><p id="19df182_470" >在需要新建操作的Java源码包上点击右键选择<span class="filepath" id="19df182_471" > 新建 &gt; Plugin DevKit &gt; 操作 </span>, 即可添加Action. <figure  id="19df182_472"><a class="lightbox" href="images/new_action_cn.png"><img alt="img.png" title="img.png" src="images/new_action_cn.png"  class="article__bordered-element--rounded " width="1284" height="934"/></a></figure> <span class="filepath" id="19df182_473" >plugin.xml</span></p><div class="code-block" data-lang="markup"         >
+    &lt;actions&gt;
+        &lt;action id=&quot;MyFirstAction.id&quot; class=&quot;com.example.demo1plugin.MyFirstAction&quot; text=&quot;我的第一个操作&quot;
+                description=&quot;我的第一个操作描述&quot;&gt;
+            &lt;add-to-group group-id=&quot;MainToolBar&quot; anchor=&quot;last&quot;/&gt;
+            &lt;keyboard-shortcut keymap=&quot;$default&quot; first-keystroke=&quot;ctrl F11&quot;/&gt;
+        &lt;/action&gt;
+    &lt;/actions&gt;
+</div><div class="code-block" data-lang="java"         >
+public class MyFirstAction extends AnAction {
+
+    @Override
+    public void actionPerformed(AnActionEvent e) {
+        Messages.showInfoMessage(&quot;Hi 你好 IDEA&quot;, &quot;Title&quot;);
+    }
+}
+</div></section><section class="chapter"  ><h2 id="19df182_476" data-toc="19df182_476"  >插件调试</h2><p id="19df182_477" >运行工具栏的 <span class="filepath" id="19df182_478" >调试 Run Plugin</span> 并正常打断点即可.</p></section><section class="chapter"  ><h2 id="19df182_479" data-toc="19df182_479"  >打包插件</h2><p id="19df182_480" >Gradle 工具窗口中双击运行 <span class="filepath" id="19df182_481" >intellij | Run Plugin</span>, 成品位于目录 <span class="filepath" id="19df182_482" >build/distributions</span></p></section><section class="chapter"  ><h2 id="19df182_483" data-toc="19df182_483"  >测试插件</h2><p id="19df182_484" >将打包的插件在IDEA安装后测试能否正常工作.</p></section><section class="chapter"  ><h2 id="19df182_485" data-toc="19df182_485"  >验证插件</h2><p id="19df182_486" >Gradle 工具窗口中双击运行 <span class="filepath" id="19df182_487" >intellij | runPluginVerifier</span>, 最终报告位于目录 <span class="filepath" id="19df182_488" >build/reports/pluginVerifier</span>, 确保没有错误信息.</p><aside data-type="note" class="prompt" data-title="" id="19df182_489" ><p>这种简单插件一般都无兼容性问题, 只需要发布前验证一次.</p></aside><aside data-type="warning" class="prompt" data-title="" id="19df182_490"><p>由于首次验证项目需要下载依赖库和IDEA相关的发行包(每个发行包都下载), 请确保磁盘空间足够及稳定的网络连接, 否则无法运行成功, 耗时极大</p></aside><div class="code-block" data-lang="plaintext"         >
+2022-09-27T20:57:48 [main] INFO  verification - Reading IDE C:\Users\beans\.pluginVerifier\ides\IC-2022.3
+2022-09-27T20:57:48 [main] INFO  c.j.p.options.OptionsParser - Reading IDE from C:\Users\beans\.pluginVerifier\ides\IC-2022.3
+2022-09-27T20:58:01 [main] INFO  verification - Reading IDE C:\Users\beans\.pluginVerifier\ides\IC-2022.2.2
+2022-09-27T20:58:01 [main] INFO  c.j.p.options.OptionsParser - Reading IDE from C:\Users\beans\.pluginVerifier\ides\IC-2022.2.2
+2022-09-27T20:58:09 [main] INFO  verification - Reading IDE C:\Users\beans\.pluginVerifier\ides\IC-2022.1.4
+2022-09-27T20:58:09 [main] INFO  c.j.p.options.OptionsParser - Reading IDE from C:\Users\beans\.pluginVerifier\ides\IC-2022.1.4
+2022-09-27T20:58:17 [main] INFO  verification - Reading IDE C:\Users\beans\.pluginVerifier\ides\IC-2021.3.3
+2022-09-27T20:58:17 [main] INFO  c.j.p.options.OptionsParser - Reading IDE from C:\Users\beans\.pluginVerifier\ides\IC-2021.3.3
+2022-09-27T20:58:25 [main] INFO  verification - Reading plugin to check from C:\Users\beans\Documents\github\beansoft\demo1plugin\build\distributions\demo1plugin-1.0-SNAPSHOT.zip
+</div></section><section class="chapter"  ><h2 id="19df182_492" data-toc="19df182_492"  >发布插件</h2><p id="19df182_493" >打开插件网站 <a href="https://plugins.jetbrains.com/" id="19df182_494"   data-external="true" rel="noopener noreferrer" >https://plugins.jetbrains.com/</a>, 点击 Sign In 后上传.</p><p id="19df182_495" >如果没有账号, 需要提前注册.</p></section><section class="chapter"  ><h2 id="19df182_496" data-toc="19df182_496"  >接受邮件并等待审核通过</h2></section><section class="chapter"  ><h2 id="19df182_497" data-toc="19df182_497"  >技巧</h2><ul class="list _ul" id="19df182_498"    ><li class="list__item" id="19df182_499" ><p><a href="internal-ui-inspector.html" id="19df182_500" data-tooltip="UI 检查器 工具可以用来检测IntelliJ IDEA界面来获取每个元素的内部描述. UI 检查器 启用时, UI 元素可以通过交互式点击来测试."  >UI Inspector (UI检查器)</a> 工具可以用来获取每个UI元素属性的内部描述.</p></li></ul></section><section class="chapter"  ><h2 id="19df182_501" data-toc="19df182_501"  >常见问题</h2><section class="chapter"  ><h3 id="java-psiclass" data-toc="java-psiclass"  >添加Java相关依赖(找不到PsiClass):</h3><p id="19df182_502" ><span class="filepath" id="19df182_503" >plugin.xml</span></p><div class="code-block" data-lang="markup"         >
+&lt;depends&gt;com.intellij.modules.platform&lt;/depends&gt;
+&lt;depends&gt;com.intellij.java&lt;/depends&gt;
+</div></section><section class="chapter"  ><h3 id="19df182_505" data-toc="19df182_505"  >国际化</h3><p id="19df182_506" ><span class="filepath" id="19df182_507" >plugin.xml</span></p><div class="code-block" data-lang="markup"         >
+    &lt;resource-bundle&gt;messages.MyActionBundle&lt;/resource-bundle&gt;
+    &lt;depends&gt;...&lt;/depends&gt;
+</div><div class="code-block" data-lang="java"         >
+public final class MyActionBundle extends DynamicBundle {
+  @NonNls public static final String BUNDLE = &quot;messages.MyActionBundle&quot;;
+  private static final MyActionBundle INSTANCE = new MyActionBundle();
+
+  private MyActionBundle() {
+    super(BUNDLE);
+  }
+
+  @NotNull
+  public static String message(@NotNull @PropertyKey(resourceBundle = BUNDLE) String key, @NotNull Object  ... params) {
+    return INSTANCE.getMessage(key, params);
+  }
+}
+</div></section><section class="chapter"  ><h3 id="19df182_510" data-toc="19df182_510"  >增加图标</h3><p id="19df182_511" >建议使用SVG格式的图标. 可以从 <a href="https://jetbrains.design/intellij/resources/icons_list/" id="19df182_512"   data-external="true" rel="noopener noreferrer" >https://jetbrains.design/intellij/resources/icons_list/</a> 下载或修改. 插件图标: <code class="code " id="19df182_513"  >pluginIcon.svg</code>和<code class="code " id="19df182_514"  >pluginIcon_dark.svg</code> Action图标: <span class="filepath" id="19df182_515" >plugin.xml</span></p><p id="19df182_516" ><code class="code " id="19df182_517"  >icon=&quot;图标类名或者路径名&quot;</code></p></section></section><section class="chapter"  ><h2 id="id" data-toc="id"  >已捆绑的内置插件ID</h2><aside data-type="note" class="prompt" data-title="" id="19df182_518" ><p>提醒, 当依赖内置插件时, 请使用插件ID来代替已废弃的文件夹名称. 这种方法更稳定并且可以在所有版本的IDE中都可以使用.</p></aside><p id="19df182_519" >下表列出了所有的常用内置插件及其ID. 另请参阅 <a href="extension-point-list.html" id="19df182_520" data-tooltip="Overview of Extension Points and Listeners for IntelliJ Platform"  >扩展点和监听器列表</a> 和 <a href="plugin-compatibility.html#modules-specific-to-functionality" id="19df182_521" data-tooltip="More specialized functionality is also delivered via modules and plugins in IntelliJ Platform-based products. For example, the com.intellij.modules.python module supports the Python language-specific functionality. If a plugin uses this module's functionality, such as…"  >Modules Specific to Functionality</a>.</p><div class="table-wrapper" ><table class=" wide" id="19df182_522"  ><thead><tr class=" ijRowHead" id="19df182_523" ><th id="19df182_524"    ><p>插件名</p></th><th id="19df182_525"    ><p>插件名 ID</p></th></tr></thead><tbody ><tr class="" id="19df182_526" ><td id="19df182_527"    ><p>Copyright</p></td><td id="19df182_528"    ><p><code class="code " id="19df182_529"  >com.intellij.copyright</code></p></td></tr><tr class="" id="19df182_530" ><td id="19df182_531"    ><p>CSS</p></td><td id="19df182_532"    ><p><code class="code " id="19df182_533"  >com.intellij.css</code></p></td></tr><tr class="" id="19df182_534" ><td id="19df182_535"    ><p>Database Tools and SQL</p></td><td id="19df182_536"    ><p><code class="code " id="19df182_537"  >com.intellij.database</code> <a href="data-grip.html" id="19df182_538" data-tooltip="DataGrip is an IntelliJ Platform-based product. Plugin projects targeting DataGrip can be developed using IntelliJ IDEA with the ."  >DataGrip Plugin Development</a></p></td></tr><tr class="" id="19df182_539" ><td id="19df182_540"    ><p>IntelliLang</p></td><td id="19df182_541"    ><p><code class="code " id="19df182_542"  >org.intellij.intelliLang</code></p></td></tr><tr class="" id="19df182_543" ><td id="19df182_544"    ><p>Java</p></td><td id="19df182_545"    ><p><code class="code " id="19df182_546"  >com.intellij.java</code></p></td></tr><tr class="" id="19df182_547" ><td id="19df182_548"    ><p>JavaScript and TypeScript</p></td><td id="19df182_549"    ><p><code class="code " id="19df182_550"  >JavaScript</code></p></td></tr><tr class="" id="19df182_551" ><td id="19df182_552"    ><p>Kotlin</p></td><td id="19df182_553"    ><p><code class="code " id="19df182_554"  >org.jetbrains.kotlin</code> <a href="kotlin.html" id="19df182_555" data-tooltip="Using Kotlin to write plugins for the IntelliJ Platform is very similar to writing plugins in Java. Existing plugin developers can get started by converting boilerplate Java classes to their Kotlin equivalents by using the J2K compiler bundled with the IntelliJ Platform (versions…"  >Kotlin for Plugin Developers</a></p></td></tr><tr class="" id="19df182_556" ><td id="19df182_557"    ><p>Markdown</p></td><td id="19df182_558"    ><p><code class="code " id="19df182_559"  >org.intellij.plugins.markdown</code></p></td></tr><tr class="" id="19df182_560" ><td id="19df182_561"    ><p>Maven</p></td><td id="19df182_562"    ><p><code class="code " id="19df182_563"  >org.jetbrains.idea.maven</code></p></td></tr><tr class="" id="19df182_564" ><td id="19df182_565"    ><p>Spring</p></td><td id="19df182_566"    ><p><code class="code " id="19df182_567"  >com.intellij.spring</code> <a href="spring-api.html" id="19df182_568" data-tooltip="Spring API allows 3rd party plugins to re-use, integrate with or extend existing Spring Framework support in IntelliJ IDEA Ultimate."  >Spring API</a></p></td></tr><tr class="" id="19df182_569" ><td id="19df182_570"    ><p>Spring Boot</p></td><td id="19df182_571"    ><p><code class="code " id="19df182_572"  >com.intellij.spring.boot</code> <a href="spring-api.html" id="19df182_573" data-tooltip="Spring API allows 3rd party plugins to re-use, integrate with or extend existing Spring Framework support in IntelliJ IDEA Ultimate."  >Spring API</a></p></td></tr></tbody ></table ></div></section><section class="chapter"  ><h2 id="19df182_574" data-toc="19df182_574"  >所有扩展点和监听器列表</h2><p id="19df182_575" ><a href="extension-point-list.html" id="19df182_576" data-tooltip="Overview of Extension Points and Listeners for IntelliJ Platform"  >扩展点和监听器列表</a></p></section><div class="last-modified"> Last modified: 28 九月 2022</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom">  <a class="navigation-links__prev" href="home.html">JetBrains 码上道：从零开始，开发插件</a>   <a class="navigation-links__next" href="create-theme-plugin-project.html">创建主题插件</a>  </div></article><div id="disqus_thread"></div></div></section></main></div>  <script src="https://resources.jetbrains.com/storage/help-app/v5/app.js"></script></body></html>
