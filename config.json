@@ -1,9 +1,6 @@
 {
   "webmaster": "https://plugins.jetbrains.com/docs/intellij/getting-help.html",
   "productWebUrl": "https://plugins.jetbrains.com/docs/intellij/",
-  "searchAlgoliaApiKey": "8c2683cac2d71d547b55183297abb506",
-  "searchAlgoliaId": "OHIV241QET",
-  "searchAlgoliaIndexName": "prod_JETBRAINSCOM_HELP",
   "productId": "intellij",
   "footer": {
     "poweredBy": true,
